@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
+import 'package:sazon_recetas/routes/routes.dart';
+import 'package:sazon_recetas/theme/app_theme.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(const SazonApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class SazonApp extends StatelessWidget {
+  const SazonApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      home: Scaffold(
-        appBar: AppBar(title: Text('Sazón')),
-        body: Center(child: Text('Bienvenido a Sazón')),
-      ),
+      title: 'Sazón',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      initialRoute: AppRoutes.home,
+      onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }
 }
