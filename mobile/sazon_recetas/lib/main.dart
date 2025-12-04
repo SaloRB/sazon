@@ -1,23 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:sazon_recetas/core/core.dart';
+import 'package:sazon_recetas/features/auth/auth.dart';
 import 'package:sazon_recetas/routes/routes.dart';
 import 'package:sazon_recetas/theme/app_theme.dart';
 
 void main() {
-  runApp(const SazonApp());
+  Bloc.observer = AppBlocObserver();
+
+  // Initialize base services
+  final secureStorageService = SecureStorageService();
+  final authTokenStorage = AuthTokenStorage(storage: secureStorageService);
+  final apiClient = ApiClient(tokenStorage: authTokenStorage);
+
+  runApp(SazonApp(apiClient: apiClient, authTokenStorage: authTokenStorage));
 }
 
 class SazonApp extends StatelessWidget {
-  const SazonApp({super.key});
+  final ApiClient apiClient;
+  final AuthTokenStorage authTokenStorage;
+
+  const SazonApp({
+    super.key,
+    required this.apiClient,
+    required this.authTokenStorage,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Sazón',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
-      initialRoute: AppRoutes.home,
-      onGenerateRoute: AppRouter.onGenerateRoute,
+    return MultiBlocProvider(
+      providers: [BlocProvider<AuthCubit>(create: (_) => AuthCubit())],
+      child: MaterialApp(
+        title: 'Sazón',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.light,
+        initialRoute: AppRoutes.home,
+        onGenerateRoute: AppRouter.onGenerateRoute,
+      ),
     );
   }
 }
