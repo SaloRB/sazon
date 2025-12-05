@@ -1,0 +1,25 @@
+import { eq } from 'drizzle-orm'
+
+import { db } from '../../db/client'
+import { users } from '../../db/schema'
+
+type NewUser = typeof users.$inferInsert
+
+export class UserRepository {
+  async createUser(data: NewUser) {
+    const [user] = await db.insert(users).values(data).returning()
+    return user
+  }
+
+  async findByEmail(email: string) {
+    const [user] = await db.select().from(users).where(eq(users.email, email))
+
+    return user ?? null
+  }
+
+  async findById(id: number) {
+    const [user] = await db.select().from(users).where(eq(users.id, id))
+
+    return user ?? null
+  }
+}

@@ -4,6 +4,7 @@ import express from 'express'
 
 import { db } from './db/client'
 import { users } from './db/schema'
+import authRoutes from './modules/auth/auth.routes'
 
 dotenv.config()
 
@@ -12,6 +13,9 @@ const app = express()
 // Middleware
 app.use(cors())
 app.use(express.json())
+
+// Routes
+app.use('/auth', authRoutes)
 
 // Health check endpoint
 app.get('/health', async (_req, res) => {
