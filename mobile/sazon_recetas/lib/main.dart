@@ -13,24 +13,40 @@ void main() {
   final secureStorageService = SecureStorageService();
   final authTokenStorage = AuthTokenStorage(storage: secureStorageService);
   final apiClient = ApiClient(tokenStorage: authTokenStorage);
+  final authRepository = AuthRepository(apiClient: apiClient);
 
-  runApp(SazonApp(apiClient: apiClient, authTokenStorage: authTokenStorage));
+  runApp(
+    SazonApp(
+      apiClient: apiClient,
+      authTokenStorage: authTokenStorage,
+      authRepository: authRepository,
+    ),
+  );
 }
 
 class SazonApp extends StatelessWidget {
   final ApiClient apiClient;
   final AuthTokenStorage authTokenStorage;
+  final AuthRepository authRepository;
 
   const SazonApp({
     super.key,
     required this.apiClient,
     required this.authTokenStorage,
+    required this.authRepository,
   });
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider<AuthCubit>(create: (_) => AuthCubit())],
+      providers: [
+        BlocProvider<AuthCubit>(
+          create: (_) => AuthCubit(
+            authRepository: authRepository,
+            tokenStorage: authTokenStorage,
+          )..checkSession(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Sazón',
         debugShowCheckedModeBanner: false,
