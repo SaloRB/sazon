@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sazon_recetas/core/core.dart';
-import 'package:sazon_recetas/features/auth/auth.dart';
+import 'package:sazon_recetas/features/features.dart';
 
 class AuthShellPage extends StatefulWidget {
   const AuthShellPage({super.key});
