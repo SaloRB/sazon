@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:sazon_recetas/core/core.dart';
-import 'package:sazon_recetas/features/auth/auth.dart';
-import 'package:sazon_recetas/routes/routes.dart';
+import 'package:sazon_recetas/features/features.dart';
 import 'package:sazon_recetas/theme/app_theme.dart';
 
 void main() {
@@ -51,8 +50,7 @@ class SazonApp extends StatelessWidget {
         title: 'Sazón',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
-        initialRoute: AppRoutes.home,
-        onGenerateRoute: AppRouter.onGenerateRoute,
+        home: const RootPage(),
       ),
     );
   }
