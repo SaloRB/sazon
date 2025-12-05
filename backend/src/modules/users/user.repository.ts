@@ -1,9 +1,6 @@
 import { eq } from 'drizzle-orm'
 
-import { db } from '../../db/client'
-import { users } from '../../db/schema'
-
-type NewUser = typeof users.$inferInsert
+import { db, NewUser, users } from '../../db'
 
 export class UserRepository {
   async createUser(data: NewUser) {

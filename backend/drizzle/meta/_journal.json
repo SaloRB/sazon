@@ -15,6 +15,13 @@
       "when": 1764887647516,
       "tag": "0001_perfect_pete_wisdom",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1764953790637,
+      "tag": "0002_dusty_dust",
+      "breakpoints": true
     }
   ]
 }
