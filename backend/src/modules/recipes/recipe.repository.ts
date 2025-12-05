@@ -33,8 +33,6 @@ export type CreateRecipeInput = {
 }
 
 export type UpdateRecipeInput = {
-  recipeId: number
-  userId: number
   title?: string
   description?: string | null
   difficulty?: 'easy' | 'medium' | 'hard'
@@ -175,5 +173,11 @@ export class RecipeRepository {
 
   async deleteById(id: number): Promise<void> {
     await db.delete(recipes).where(eq(recipes.id, id))
+  }
+
+  async findById(id: number): Promise<Recipe | null> {
+    const [recipe] = await db.select().from(recipes).where(eq(recipes.id, id))
+
+    return recipe ?? null
   }
 }
