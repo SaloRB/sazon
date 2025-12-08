@@ -36,15 +36,23 @@ class RecipesRepository {
 
   /// GET /recipes/:id
   Future<RecipeDetail> getRecipeDetail(int id) async {
-    final data = await _apiClient.dio.get('/recipes/$id');
-    return RecipeDetail.fromJson(data as Map<String, dynamic>);
+    final response = await _apiClient.dio.get('/recipes/$id');
+
+    final data = response.data as Map<String, dynamic>;
+
+    return RecipeDetail.fromJson(data);
   }
 
   /// POST /recipes
   Future<RecipeDetail> createRecipe(CreateRecipeInput input) async {
-    final data = await _apiClient.dio.post('/recipes', data: input.toJson());
+    final response = await _apiClient.dio.post(
+      '/recipes',
+      data: input.toJson(),
+    );
 
-    return RecipeDetail.fromJson(data as Map<String, dynamic>);
+    final data = response.data as Map<String, dynamic>;
+
+    return RecipeDetail.fromJson(data);
   }
 
   /// PUT /recipes/:id
@@ -54,8 +62,9 @@ class RecipesRepository {
       data: input.toJson(),
     );
 
-    final body = response.data as Map<String, dynamic>;
-    return RecipeDetail.fromJson(body);
+    final data = response.data as Map<String, dynamic>;
+
+    return RecipeDetail.fromJson(data);
   }
 
   /// DELETE /recipes/:id
