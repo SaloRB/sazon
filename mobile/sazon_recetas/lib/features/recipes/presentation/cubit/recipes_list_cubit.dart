@@ -30,7 +30,7 @@ class RecipesListCubit extends Cubit<RecipesListState> {
       emit(
         state.copyWith(
           status: RecipesListStatus.error,
-          errorMessage: 'Failed to load recipes',
+          errorMessage: 'No se pudieron cargar las recetas.',
         ),
       );
     }

@@ -2,13 +2,13 @@ import { Router } from 'express'
 
 import { RecipeController } from './recipe.controller'
 
-import { authMiddleware } from '../../middlewares/auth.middleware'
+import { authMiddleware, optionalAuth } from '../../middlewares/auth.middleware'
 
 const router = Router()
 const controller = new RecipeController()
 
 // List all recipes (public, but supports ?mine=true for user-specific recipes)
-router.get('/', controller.list)
+router.get('/', optionalAuth, controller.list)
 
 // Recipe details by ID (public)
 router.get('/:id', controller.getOne)

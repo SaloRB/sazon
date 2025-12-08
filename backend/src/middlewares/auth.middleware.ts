@@ -29,3 +29,31 @@ export function authMiddleware(
     return res.status(401).json({ message: 'INVALID_TOKEN' })
   }
 }
+
+export function optionalAuth(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) {
+  const header = req.headers.authorization
+
+  if (!header) {
+    // no auth provided, proceed without userId
+    return next()
+  }
+
+  const token = header.substring(7)
+
+  if (!token) {
+    return next()
+  }
+
+  try {
+    const { userId } = authService.verifyToken(token)
+    req.userId = userId
+  } catch (error) {
+    // invalid token, proceed without userId
+  }
+
+  return next()
+}
