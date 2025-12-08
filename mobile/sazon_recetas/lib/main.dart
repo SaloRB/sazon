@@ -15,10 +15,13 @@ void main() {
   final authRepository = AuthRepository(apiClient: apiClient);
 
   runApp(
-    SazonApp(
-      apiClient: apiClient,
-      authTokenStorage: authTokenStorage,
-      authRepository: authRepository,
+    RepositoryProvider<ApiClient>.value(
+      value: apiClient,
+      child: SazonApp(
+        apiClient: apiClient,
+        authTokenStorage: authTokenStorage,
+        authRepository: authRepository,
+      ),
     ),
   );
 }
