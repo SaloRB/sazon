@@ -38,21 +38,86 @@ class _RecipeDetailView extends StatelessWidget {
                 return const SizedBox.shrink();
               }
               final detail = state.detail!;
-              return IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () async {
-                  final result = await Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => RecipeFormPage(initialDetail: detail),
-                    ),
-                  );
 
-                  if (result != null && context.mounted) {
-                    context.read<RecipeDetailCubit>().loadRecipe(
-                      detail.recipe.id,
-                    );
-                  }
-                },
+              return Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () async {
+                      final result = await Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => RecipeFormPage(initialDetail: detail),
+                        ),
+                      );
+
+                      if (!context.mounted) return;
+
+                      if (result != null) {
+                        // Recargar los detalles de la receta después de la edición
+                        context.read<RecipeDetailCubit>().loadRecipe(
+                          detail.recipe.id,
+                        );
+
+                        // Snackbar de confirmación
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Receta actualizada correctamente'),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                  IconButton(
+                    onPressed: () async {
+                      final confirmed = await showDialog<bool>(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: const Text('Eliminar receta'),
+                          content: const Text(
+                            '¿Estás seguro de que deseas eliminar esta receta?',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(ctx).pop(false),
+                              child: const Text('Cancelar'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.of(ctx).pop(true),
+                              child: const Text('Eliminar'),
+                            ),
+                          ],
+                        ),
+                      );
+
+                      if (confirmed != true) return;
+                      if (!context.mounted) return;
+
+                      try {
+                        final apiClient = context.read<ApiClient>();
+                        final repository = RecipesRepository(
+                          apiClient: apiClient,
+                        );
+
+                        await repository.deleteRecipe(detail.recipe.id);
+
+                        // Return to previous screen
+                        if (context.mounted) {
+                          Navigator.of(context).pop('deleted');
+                        }
+                      } catch (e) {
+                        if (!context.mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Error al eliminar la receta: ${e.toString()}',
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    icon: Icon(Icons.delete_outline),
+                  ),
+                ],
               );
             },
           ),

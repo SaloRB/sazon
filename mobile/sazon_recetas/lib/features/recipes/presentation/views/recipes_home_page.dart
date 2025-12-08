@@ -101,13 +101,20 @@ class _RecipesHomeView extends StatelessWidget {
             context,
           ).push(MaterialPageRoute(builder: (_) => const RecipeFormPage()));
 
+          if (!context.mounted) return;
+
           // If created/updated, reload recipes
-          if (result != null && context.mounted) {
+          if (result != null) {
+            // Reload recipes
             context.read<RecipesListCubit>().loadRecipes();
+
+            // Show snackbar
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Receta guardada correctamente')),
+            );
           }
         },
         backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.background,
         child: const Icon(Icons.add),
       ),
     );
@@ -129,12 +136,26 @@ class _RecipeCard extends StatelessWidget {
       elevation: 2,
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: () {
-          Navigator.of(context).push(
+        onTap: () async {
+          final result = await Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) => RecipeDetailPage(recipeId: recipe.id),
             ),
           );
+
+          if (!context.mounted) return;
+
+          if (result == 'deleted') {
+            // Reload recipes
+            await context.read<RecipesListCubit>().loadRecipes();
+
+            if (!context.mounted) return;
+
+            // Show snackbar
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Receta eliminada correctamente')),
+            );
+          }
         },
         child: Padding(
           padding: const EdgeInsets.all(16),
