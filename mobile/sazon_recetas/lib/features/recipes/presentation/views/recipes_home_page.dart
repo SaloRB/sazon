@@ -96,7 +96,16 @@ class _RecipesHomeView extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () async {
+          final result = await Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => const RecipeFormPage()));
+
+          // If created/updated, reload recipes
+          if (result != null && context.mounted) {
+            context.read<RecipesListCubit>().loadRecipes();
+          }
+        },
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.background,
         child: const Icon(Icons.add),

@@ -109,10 +109,6 @@ class RecipeDetail {
     final stepsJson = (json['steps'] as List<dynamic>? ?? [])
         .cast<Map<String, dynamic>>();
 
-    print(recipeJson);
-    print(ingredientsJson);
-    print(stepsJson);
-
     return RecipeDetail(
       recipe: Recipe.fromJson(recipeJson),
       ingredients: ingredientsJson

@@ -28,7 +28,36 @@ class _RecipeDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Detalle de receta')),
+      appBar: AppBar(
+        title: const Text('Detalle de receta'),
+        actions: [
+          BlocBuilder<RecipeDetailCubit, RecipeDetailState>(
+            builder: (context, state) {
+              if (state.status != RecipeDetailStatus.loaded ||
+                  state.detail == null) {
+                return const SizedBox.shrink();
+              }
+              final detail = state.detail!;
+              return IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () async {
+                  final result = await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => RecipeFormPage(initialDetail: detail),
+                    ),
+                  );
+
+                  if (result != null && context.mounted) {
+                    context.read<RecipeDetailCubit>().loadRecipe(
+                      detail.recipe.id,
+                    );
+                  }
+                },
+              );
+            },
+          ),
+        ],
+      ),
       body: SafeArea(
         child: BlocBuilder<RecipeDetailCubit, RecipeDetailState>(
           builder: (context, state) {
