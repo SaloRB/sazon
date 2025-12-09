@@ -1,3 +1,4 @@
+export * from './schema/favorites'
 export * from './schema/recipe-ingredients'
 export * from './schema/recipe-steps'
 export * from './schema/recipes'
