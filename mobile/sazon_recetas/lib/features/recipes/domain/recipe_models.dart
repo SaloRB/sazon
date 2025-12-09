@@ -39,6 +39,9 @@ class Recipe {
       updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
   }
+
+  @override
+  String toString() => 'Recipe{id: $id, userId: $userId, title: $title}';
 }
 
 class RecipeIngredient {
