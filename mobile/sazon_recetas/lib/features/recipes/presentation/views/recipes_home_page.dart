@@ -15,6 +15,7 @@ class _RecipesHomePageState extends State<RecipesHomePage> {
   @override
   Widget build(BuildContext context) {
     final apiClient = context.read<ApiClient>();
+
     final repository = RecipesRepository(apiClient: apiClient);
 
     return BlocProvider(
@@ -32,7 +33,7 @@ class _RecipesHomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sazón'),
+        title: const Text('Sazón - Recetas'),
         leading: BlocBuilder<RecipesListCubit, RecipesListState>(
           builder: (context, state) {
             return PopupMenuButton(
