@@ -2,10 +2,16 @@ import { RecipeRepository } from '../recipes/recipe.repository'
 import { FavoritesRepository } from './favorites.repository'
 
 export class FavoritesService {
+  private favoritesRepo: FavoritesRepository
+  private recipesRepo: RecipeRepository
+
   constructor(
-    private readonly favoritesRepo: FavoritesRepository,
-    private readonly recipesRepo: RecipeRepository
-  ) {}
+    favoritesRepo?: FavoritesRepository,
+    recipesRepo?: RecipeRepository
+  ) {
+    this.favoritesRepo = favoritesRepo ?? new FavoritesRepository()
+    this.recipesRepo = recipesRepo ?? new RecipeRepository()
+  }
 
   /**
    * Mark a recipe as favorite for a user.

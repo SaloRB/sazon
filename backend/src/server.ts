@@ -7,6 +7,7 @@ import { users } from './db/schema'
 
 import authRoutes from './modules/auth/auth.routes'
 import recipeRoutes from './modules/recipes/recipe.routes'
+import favoriteRoutes from './modules/favorites/favorites.routes'
 
 dotenv.config()
 
@@ -19,6 +20,7 @@ app.use(express.json())
 // Routes
 app.use('/auth', authRoutes)
 app.use('/recipes', recipeRoutes)
+app.use('/', favoriteRoutes)
 
 // Health check endpoint
 app.get('/health', async (_req, res) => {

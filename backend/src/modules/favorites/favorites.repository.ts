@@ -1,6 +1,5 @@
 import { and, desc, eq } from 'drizzle-orm'
 import { db, favorites, recipes } from '../../db'
-import { title } from 'process'
 
 export class FavoritesRepository {
   /**
