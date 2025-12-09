@@ -1,46 +1,46 @@
 # 🍽️ **Sazón --- Aplicación de Recetas (Flutter + Node.js + Drizzle ORM)**
 
 Sazón es una aplicación móvil para gestionar recetas de cocina: crear,
-editar, explorar y guardar favoritas.\
+editar, explorar y guardar favoritas.
 Construida con un stack moderno:
 
--   **Frontend:** Flutter + Bloc\
--   **Backend:** Node.js + Express\
--   **Base de datos:** PostgreSQL + Drizzle ORM\
--   **Infra:** Docker para base de datos
+- **Frontend:** Flutter + Bloc
+- **Backend:** Node.js + Express
+- **Base de datos:** PostgreSQL + Drizzle ORM
+- **Infra:** Docker para base de datos
 
 Este README describe el proyecto, la arquitectura, la instalación y los
 comandos clave.
 
-------------------------------------------------------------------------
+---
 
 # 📌 **Características principales**
 
 ### 🔐 Autenticación
 
--   Registro e inicio de sesión con email + contraseña.
--   Tokens JWT almacenados de forma segura con Secure Storage.
+- Registro e inicio de sesión con email + contraseña.
+- Tokens JWT almacenados de forma segura con Secure Storage.
 
 ### 🍳 Gestión completa de recetas
 
--   Crear recetas con:
-    -   Título\
-    -   Descripción\
-    -   Dificultad\
-    -   Tiempos (preparación / cocción)\
-    -   Porciones\
-    -   Ingredientes (ordenados)\
-    -   Pasos (ordenados)
--   Editar y eliminar recetas propias.
--   Listar todas las recetas del sistema o solo las del usuario.
+- Crear recetas con:
+  - Título
+  - Descripción
+  - Dificultad
+  - Tiempos (preparación / cocción)
+  - Porciones
+  - Ingredientes (ordenados)
+  - Pasos (ordenados)
+- Editar y eliminar recetas propias.
+- Listar todas las recetas del sistema o solo las del usuario.
 
 ### ❤️ Favoritos (Sprint 4)
 
--   Marcar/Desmarcar recetas como favoritas.
--   Ver la lista de recetas favoritas en una pestaña dedicada.
--   Estado sincronizado entre backend y app.
+- Marcar/Desmarcar recetas como favoritas.
+- Ver la lista de recetas favoritas en una pestaña dedicada.
+- Estado sincronizado entre backend y app.
 
-------------------------------------------------------------------------
+---
 
 # 🏗️ **Arquitectura general**
 
@@ -62,17 +62,17 @@ comandos clave.
 La app móvil usa **HTTP/JSON** hacia el backend con autenticación
 **Bearer JWT**.
 
-------------------------------------------------------------------------
+---
 
 # 🗄️ **Base de datos (PostgreSQL + Drizzle ORM)**
 
 Tablas principales:
 
--   `users`
--   `recipes`
--   `recipe_ingredients`
--   `recipe_steps`
--   `favorites`
+- `users`
+- `recipes`
+- `recipe_ingredients`
+- `recipe_steps`
+- `favorites`
 
 Relaciones:
 
@@ -83,32 +83,32 @@ Relaciones:
 
 Migrations generadas automáticamente vía Drizzle.
 
-------------------------------------------------------------------------
+---
 
 # 🚀 **Instalación y ejecución del proyecto**
 
 ## 1️⃣ Requisitos previos
 
--   Node.js 20+
--   npm o pnpm
--   Docker
--   Flutter SDK 3.22+
--   Xcode / Android Studio para correr en dispositivos
+- Node.js 20+
+- npm o pnpm
+- Docker
+- Flutter SDK 3.22+
+- Xcode / Android Studio para correr en dispositivos
 
-------------------------------------------------------------------------
+---
 
 # 🔧 **Backend --- Setup**
 
 ### 1. Instalar dependencias
 
-``` sh
+```sh
 cd backend
 npm install
 ```
 
 ### 2. Levantar la base de datos con Docker
 
-``` sh
+```sh
 docker compose up -d
 ```
 
@@ -122,14 +122,14 @@ Ejemplo:
 
 ### 4. Ejecutar migraciones
 
-``` sh
+```sh
 npx drizzle-kit generate
 npx drizzle-kit push
 ```
 
 ### 5. Ejecutar backend en modo dev
 
-``` sh
+```sh
 npm run dev
 ```
 
@@ -137,13 +137,13 @@ Backend listo en:
 
     http://localhost:3000
 
-------------------------------------------------------------------------
+---
 
 # 📱 **Frontend (Flutter) --- Setup**
 
 ### 1. Instalar dependencias
 
-``` sh
+```sh
 cd mobile/sazon_recetas
 flutter pub get
 ```
@@ -152,7 +152,7 @@ flutter pub get
 
 En `ApiConfig`:
 
-``` dart
+```dart
 static const baseUrl = 'http://localhost:3000';
 ```
 
@@ -160,17 +160,17 @@ static const baseUrl = 'http://localhost:3000';
 
 iOS:
 
-``` sh
+```sh
 flutter run -d ios
 ```
 
 Android:
 
-``` sh
+```sh
 flutter run -d android
 ```
 
-------------------------------------------------------------------------
+---
 
 # 🧩 **Estructura de carpetas**
 
@@ -204,51 +204,51 @@ flutter run -d android
       widgets/
       app/
 
-------------------------------------------------------------------------
+---
 
 # 📚 **Documentos adicionales**
 
 La carpeta `docs/` contiene:
 
--   architecture.md
--   api-endpoints.md
--   database-schema.md
--   setup-backend.md
--   setup-mobile.md
--   roadmap.md
--   decision-log.md
+- architecture.md
+- api-endpoints.md
+- database-schema.md
+- setup-backend.md
+- setup-mobile.md
+- roadmap.md
+- decision-log.md
 
-------------------------------------------------------------------------
+---
 
 # 🛣️ **Roadmap del proyecto**
 
 ### ✔ Versiones ya implementadas
 
--   Sprint 0: Configuración e infraestructura
--   Sprint 1: Autenticación
--   Sprint 2: CRUD de recetas
--   Sprint 3: UI/UX + mejoras
--   Sprint 4: Favoritos
+- Sprint 0: Configuración e infraestructura
+- Sprint 1: Autenticación
+- Sprint 2: CRUD de recetas
+- Sprint 3: UI/UX + mejoras
+- Sprint 4: Favoritos
 
 ### 🚧 Próximos sprints sugeridos
 
--   Sprint 5: Búsqueda avanzada
--   Sprint 6: Ratings y comentarios
--   Sprint 7: Modo offline
--   Sprint 8: Listas de compras
--   Sprint 9: Compartir recetas y deep links
--   Sprint 10: Subir fotos de recetas
+- Sprint 5: Búsqueda avanzada
+- Sprint 6: Ratings y comentarios
+- Sprint 7: Modo offline
+- Sprint 8: Listas de compras
+- Sprint 9: Compartir recetas y deep links
+- Sprint 10: Subir fotos de recetas
 
-------------------------------------------------------------------------
+---
 
 # 🤝 **Contribución**
 
-1.  Crea una rama\
-2.  Haz tus cambios\
-3.  Envía un PR\
+1.  Crea una rama
+2.  Haz tus cambios
+3.  Envía un PR
 4.  Documenta lo necesario en `docs/`
 
-------------------------------------------------------------------------
+---
 
 # 📄 **Licencia**
 
