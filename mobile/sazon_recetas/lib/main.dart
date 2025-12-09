@@ -13,6 +13,7 @@ void main() {
   final authTokenStorage = AuthTokenStorage(storage: secureStorageService);
   final apiClient = ApiClient(tokenStorage: authTokenStorage);
   final authRepository = AuthRepository(apiClient: apiClient);
+  final recipesRepository = RecipesRepository(apiClient: apiClient);
 
   runApp(
     RepositoryProvider<ApiClient>.value(
@@ -21,6 +22,7 @@ void main() {
         apiClient: apiClient,
         authTokenStorage: authTokenStorage,
         authRepository: authRepository,
+        recipesRepository: recipesRepository,
       ),
     ),
   );
@@ -30,12 +32,14 @@ class SazonApp extends StatelessWidget {
   final ApiClient apiClient;
   final AuthTokenStorage authTokenStorage;
   final AuthRepository authRepository;
+  final RecipesRepository recipesRepository;
 
   const SazonApp({
     super.key,
     required this.apiClient,
     required this.authTokenStorage,
     required this.authRepository,
+    required this.recipesRepository,
   });
 
   @override
@@ -47,6 +51,10 @@ class SazonApp extends StatelessWidget {
             authRepository: authRepository,
             tokenStorage: authTokenStorage,
           )..checkSession(),
+        ),
+        BlocProvider<FavoritesCubit>(
+          create: (_) =>
+              FavoritesCubit(repository: recipesRepository)..loadFavorites(),
         ),
       ],
       child: MaterialApp(
