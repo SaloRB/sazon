@@ -5,13 +5,13 @@ enum FavoritesStatus { initial, loading, loaded, updating, error }
 class FavoritesState extends Equatable {
   final FavoritesStatus status;
   final Set<int> favoriteIds;
-  // final List<Recipe> favoriteRecipes;
+  final List<Recipe> favoriteRecipes;
   final String? errorMessage;
 
   const FavoritesState({
     required this.status,
     required this.favoriteIds,
-    // required this.favoriteRecipes,
+    required this.favoriteRecipes,
     required this.errorMessage,
   });
 
@@ -19,7 +19,7 @@ class FavoritesState extends Equatable {
     return FavoritesState(
       status: FavoritesStatus.initial,
       favoriteIds: <int>{},
-      // favoriteRecipes: <Recipe>[],
+      favoriteRecipes: <Recipe>[],
       errorMessage: null,
     );
   }
@@ -27,13 +27,13 @@ class FavoritesState extends Equatable {
   FavoritesState copyWith({
     FavoritesStatus? status,
     Set<int>? favoriteIds,
-    // List<Recipe>? favoriteRecipes,
+    List<Recipe>? favoriteRecipes,
     String? errorMessage,
   }) {
     return FavoritesState(
       status: status ?? this.status,
       favoriteIds: favoriteIds ?? this.favoriteIds,
-      // favoriteRecipes: favoriteRecipes ?? this.favoriteRecipes,
+      favoriteRecipes: favoriteRecipes ?? this.favoriteRecipes,
       errorMessage: errorMessage,
     );
   }
@@ -42,7 +42,7 @@ class FavoritesState extends Equatable {
   List<Object?> get props => [
     status,
     favoriteIds,
-    // favoriteRecipes,
+    favoriteRecipes,
     errorMessage,
   ];
 }

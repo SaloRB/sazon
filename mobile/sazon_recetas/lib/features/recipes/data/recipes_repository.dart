@@ -87,11 +87,11 @@ class RecipesRepository {
   }
 
   /// GET /auth/me/favorites
-  // Future<List<Recipe>> getMyFavorites() async {
-  //   final response = await _apiClient.dio.get('/auth/me/favorites');
+  Future<List<Recipe>> getMyFavorites() async {
+    final response = await _apiClient.dio.get('/auth/me/favorites');
 
-  //   final body = response.data as Map<String, dynamic>;
+    final body = response.data as Map<String, dynamic>;
 
-  //   return _parseRecipesList(body);
-  // }
+    return _parseRecipesList(body);
+  }
 }

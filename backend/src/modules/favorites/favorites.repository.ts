@@ -40,6 +40,7 @@ export class FavoritesRepository {
         cookTimeMinutes: recipes.cookTimeMinutes,
         servings: recipes.servings,
         createdAt: recipes.createdAt,
+        updatedAt: recipes.updatedAt,
       })
       .from(favorites)
       .innerJoin(recipes, eq(favorites.recipeId, recipes.id))

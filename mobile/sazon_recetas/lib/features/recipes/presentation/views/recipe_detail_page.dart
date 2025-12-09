@@ -37,10 +37,26 @@ class _RecipeDetailView extends StatelessWidget {
                   state.detail == null) {
                 return const SizedBox.shrink();
               }
+
               final detail = state.detail!;
+              final recipe = detail.recipe;
+
+              final favoritesState = context.watch<FavoritesCubit>().state;
+              final isFavorite = favoritesState.favoriteIds.contains(recipe.id);
 
               return Row(
                 children: [
+                  IconButton(
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_outline,
+                      color: isFavorite ? Colors.redAccent : null,
+                    ),
+                    onPressed: () async {
+                      await context.read<FavoritesCubit>().toggleFavorite(
+                        recipe.id,
+                      );
+                    },
+                  ),
                   IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: () async {

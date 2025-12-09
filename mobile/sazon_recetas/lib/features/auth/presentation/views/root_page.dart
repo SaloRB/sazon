@@ -8,17 +8,32 @@ class RootPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
-      builder: (context, state) {
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        final favoritesCubit = context.read<FavoritesCubit>();
+
         switch (state.status) {
-          case AuthStatus.unknown:
-            return const _SplashScreen();
           case AuthStatus.authenticated:
-            return const RecipesHomePage();
+            favoritesCubit.loadFavorites();
+            break;
           case AuthStatus.unauthenticated:
-            return const AuthShellPage();
+          case AuthStatus.unknown:
+            favoritesCubit.clear();
+            break;
         }
       },
+      child: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) {
+          switch (state.status) {
+            case AuthStatus.unknown:
+              return const _SplashScreen();
+            case AuthStatus.authenticated:
+              return const RecipesHomePage();
+            case AuthStatus.unauthenticated:
+              return const AuthShellPage();
+          }
+        },
+      ),
     );
   }
 }

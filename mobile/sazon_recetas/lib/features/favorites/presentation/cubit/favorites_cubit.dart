@@ -13,30 +13,31 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       super(FavoritesState.initial());
 
   /// Loads favorite recipes from backend.
-  // Future<void> loadFavorites() async {
-  //   emit(state.copyWith(status: FavoritesStatus.loading, errorMessage: null));
+  Future<void> loadFavorites() async {
+    emit(state.copyWith(status: FavoritesStatus.loading, errorMessage: null));
 
-  //   try {
-  //     final favorites = await _repository.getMyFavorites();
-  //     final ids = favorites.map((r) => r.id).toSet();
+    try {
+      final favorites = await _repository.getMyFavorites();
+      final ids = favorites.map((r) => r.id).toSet();
 
-  //     emit(
-  //       state.copyWith(
-  //         status: FavoritesStatus.loaded,
-  //         favoriteIds: ids,
-  //         favoriteRecipes: favorites,
-  //         errorMessage: null,
-  //       ),
-  //     );
-  //   } catch (e) {
-  //     emit(
-  //       state.copyWith(
-  //         status: FavoritesStatus.error,
-  //         errorMessage: 'No se pudieron cargar las recetas favoritas.',
-  //       ),
-  //     );
-  //   }
-  // }
+      emit(
+        state.copyWith(
+          status: FavoritesStatus.loaded,
+          favoriteIds: ids,
+          favoriteRecipes: favorites,
+          errorMessage: null,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: FavoritesStatus.error,
+          errorMessage:
+              'No se pudieron cargar las recetas favoritas: ${e.toString()}',
+        ),
+      );
+    }
+  }
 
   /// Check if a recipe is in favorites based on current state.
   bool isFavorite(int recipeId) {
@@ -130,5 +131,10 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   ///
   /// Useful for pull-to-refresh.
   ///
-  // Future<void> refreshFavorites() => loadFavorites();
+  Future<void> refreshFavorites() => loadFavorites();
+
+  /// Clear state (e.g., on logout)
+  void clear() {
+    emit(FavoritesState.initial());
+  }
 }
