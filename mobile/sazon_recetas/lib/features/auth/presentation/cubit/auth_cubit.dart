@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:sazon_recetas/core/core.dart';
-import 'package:sazon_recetas/features/auth/auth.dart';
+import 'package:sazon_recetas/features/features.dart';
 
 part 'auth_state.dart';
 
