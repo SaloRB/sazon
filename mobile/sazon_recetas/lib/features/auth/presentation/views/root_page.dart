@@ -28,7 +28,7 @@ class RootPage extends StatelessWidget {
             case AuthStatus.unknown:
               return const _SplashScreen();
             case AuthStatus.authenticated:
-              return const RecipesHomePage();
+              return const MainScaffold();
             case AuthStatus.unauthenticated:
               return const AuthShellPage();
           }
