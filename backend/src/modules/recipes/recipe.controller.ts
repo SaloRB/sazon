@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
 
 import { RecipeService } from './recipe.service'
+import { UpdateRecipeInput } from './recipe.repository'
 
 import { AuthRequest } from '../../middlewares/auth.middleware'
 import { parseNumber } from '../../utils'
-import { UpdateRecipeInput } from './recipe.repository'
 
 export class RecipeController {
   private service: RecipeService
