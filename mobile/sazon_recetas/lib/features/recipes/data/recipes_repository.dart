@@ -6,6 +6,13 @@ class RecipesRepository {
 
   RecipesRepository({required ApiClient apiClient}) : _apiClient = apiClient;
 
+  List<Recipe> _parseRecipesList(Map<String, dynamic> body) {
+    final recipesJson = (body['recipes'] as List<dynamic>? ?? [])
+        .cast<Map<String, dynamic>>();
+
+    return recipesJson.map((item) => Recipe.fromJson(item)).toList();
+  }
+
   /// GET /recipes?mine=true|false
   Future<List<Recipe>> getRecipes({
     bool mine = false,
@@ -28,10 +35,7 @@ class RecipesRepository {
     final body = response.data as Map<String, dynamic>;
 
     // data should be: { recipes: [ ... ] }
-    final recipesJson = (body['recipes'] as List<dynamic>? ?? [])
-        .cast<Map<String, dynamic>>();
-
-    return recipesJson.map((item) => Recipe.fromJson(item)).toList();
+    return _parseRecipesList(body);
   }
 
   /// GET /recipes/:id
@@ -70,5 +74,24 @@ class RecipesRepository {
   /// DELETE /recipes/:id
   Future<void> deleteRecipe(int id) async {
     await _apiClient.dio.delete('/recipes/$id');
+  }
+
+  /// POST /recipes/:id/favorite
+  Future<void> markFavorite(int recipeId) async {
+    await _apiClient.dio.post('/recipes/$recipeId/favorite');
+  }
+
+  /// DELETE /recipes/:id/favorite
+  Future<void> unmarkFavorite(int recipeId) async {
+    await _apiClient.dio.delete('/recipes/$recipeId/favorite');
+  }
+
+  /// GET /auth/me/favorites
+  Future<List<Recipe>> getMyFavorites() async {
+    final response = await _apiClient.dio.get('/auth/me/favorites');
+
+    final body = response.data as Map<String, dynamic>;
+
+    return _parseRecipesList(body);
   }
 }
