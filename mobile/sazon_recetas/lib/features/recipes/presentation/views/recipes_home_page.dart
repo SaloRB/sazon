@@ -33,29 +33,35 @@ class _RecipesHomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sazón'),
+        leading: BlocBuilder<RecipesListCubit, RecipesListState>(
+          builder: (context, state) {
+            return PopupMenuButton(
+              initialValue: state.mine,
+              onSelected: (value) {
+                context.read<RecipesListCubit>().toggleMine(value);
+              },
+              itemBuilder: (context) => [
+                CheckedPopupMenuItem(
+                  value: false,
+                  checked: state.mine == false,
+                  child: const Text('Todas'),
+                ),
+                CheckedPopupMenuItem(
+                  value: true,
+                  checked: state.mine == true,
+                  child: const Text('Mis recetas'),
+                ),
+              ],
+              icon: const Icon(Icons.filter_list),
+            );
+          },
+        ),
         actions: [
-          BlocBuilder<RecipesListCubit, RecipesListState>(
-            builder: (context, state) {
-              return PopupMenuButton(
-                initialValue: state.mine,
-                onSelected: (value) {
-                  context.read<RecipesListCubit>().toggleMine(value);
-                },
-                itemBuilder: (context) => [
-                  CheckedPopupMenuItem(
-                    value: false,
-                    checked: state.mine == false,
-                    child: const Text('Todas'),
-                  ),
-                  CheckedPopupMenuItem(
-                    value: true,
-                    checked: state.mine == true,
-                    child: const Text('Mis recetas'),
-                  ),
-                ],
-                icon: const Icon(Icons.filter_list),
-              );
+          IconButton(
+            onPressed: () {
+              context.read<AuthCubit>().logout();
             },
+            icon: const Icon(Icons.logout),
           ),
         ],
       ),
