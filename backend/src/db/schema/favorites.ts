@@ -21,10 +21,10 @@ export const favorites = pgTable(
       .references(() => recipes.id, { onDelete: 'cascade' }),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
-  (table) => ({
-    userRecipeUnique: uniqueIndex('favorites_user_recipe_unique').on(
+  (table) => [
+    uniqueIndex('favorites_user_recipe_unique').on(
       table.userId,
       table.recipeId
     ),
-  })
+  ]
 )
