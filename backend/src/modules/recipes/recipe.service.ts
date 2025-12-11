@@ -1,4 +1,4 @@
-import { asc, eq } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 
 import {
   CreateRecipeInput,
